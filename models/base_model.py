@@ -8,6 +8,9 @@ import models
 import uuid
 
 
+time = "%Y-%m-%dT%H:%M:%S.%f"
+
+
 class BaseModel:
     """The basemodel class which serve as the base for all other class"""
 
@@ -17,7 +20,7 @@ class BaseModel:
             kwargs.pop('__class__', None)
             for key, value in kwargs.items():
                 if key == 'created_at' or key == 'updated_at':
-                    setattr(self, key, datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
+                    setattr(self, key, datetime.strptime(value, time))
                 else:
                     setattr(self, key, value)
         else:
@@ -27,7 +30,8 @@ class BaseModel:
 
     def __str__(self):
         """returns a string representation of the basemodel atributes"""
-        return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id,
+                                         self.__dict__)
 
     def save(self):
         self.updated_at = datetime.utcnow()
@@ -35,11 +39,11 @@ class BaseModel:
         models.storage.save()
 
     def to_dict(self):
-        """returns a dictionary representation of the keys and values of the instance"""
+        """returns a dictionary representation of the instance"""
         my_dict = dict(self.__dict__)
         my_dict["__class__"] = self.__class__.__name__
         if "created_at" in my_dict:
-            my_dict["created_at"] = my_dict["created_at"].strftime("%Y-%m-%dT%H:%M:%S.%f")
+            my_dict["created_at"] = my_dict["created_at"].strftime(time)
         if "updated_at" in my_dict:
-            my_dict["updated_at"] = my_dict["updated_at"].strftime("%Y-%m-%dT%H:%M:%S.%f")
+            my_dict["updated_at"] = my_dict["updated_at"].strftime(time)
         return my_dict
