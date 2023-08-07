@@ -13,7 +13,7 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
-    def all(self, cls=None):
+    def all(self):
         """returns the dictionary __objects"""
         return self.__objects
 
@@ -32,7 +32,7 @@ class FileStorage:
             json.dump(our_json, f)
 
     def reload(self):
-        """deserializes the JSON file to __objects"""
+        """deserializes the JSON file to __object"""
         try:
             with open(self.__file_path, 'r') as f:
                 loadedfile = json.load(f)
@@ -43,3 +43,4 @@ class FileStorage:
                     self.__objects[key] = classname(**loadedfile[key])
         except:
             pass
+
