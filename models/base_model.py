@@ -49,4 +49,3 @@ class BaseModel:
         if "updated_at" in my_dict:
             my_dict["updated_at"] = my_dict["updated_at"].strftime("%Y-%m-%dT%H:%M:%S.%f")
         return my_dict
-    
