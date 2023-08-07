@@ -34,10 +34,12 @@ class BaseModel:
 
     def __str__(self):
         """returns a string representation of the basemodel atributes"""
-        return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id, self.__dict)
+        return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
         self.updated_at = datetime.utcnow()
+        models.storage.new(self)
+        models.storage.save()
 
     def to_dict(self):
         """returns a dictionary representation of the keys and values of the instance"""
@@ -47,4 +49,3 @@ class BaseModel:
         if "updated_at" in my_dict:
             my_dict["updated_at"] = my_dict["updated_at"].strftime("%Y-%m-%dT%H:%M:%S.%f")
         return my_dict
-    

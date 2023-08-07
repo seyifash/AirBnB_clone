@@ -3,7 +3,7 @@
 contains the filestorage class
 """
 import json
-from models import BaseModel
+from models.base_model import BaseModel
 
 
 class FileStorage:
@@ -28,7 +28,7 @@ class FileStorage:
         for key in self.__objects:
             our_json[key] = self.__objects[key].to_dict()
         with open(self.__file_path, "w") as f:
-            json.dumps(our_json, f)
+            json.dump(our_json, f)
 
     def reload(self):
         """deserializes the JSON file to __objects"""
