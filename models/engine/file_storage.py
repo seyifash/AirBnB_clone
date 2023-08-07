@@ -13,7 +13,7 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
-    def all(self):
+    def all(self, cls=None):
         """returns the dictionary __objects"""
         return self.__objects
 
@@ -43,4 +43,3 @@ class FileStorage:
                     self.__objects[key] = classname(**loadedfile[key])
         except:
             pass
-
