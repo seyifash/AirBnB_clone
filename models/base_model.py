@@ -6,6 +6,7 @@ contains the class Basemodel
 from datetime import datetime
 import models
 import uuid
+from . import storage
 
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
