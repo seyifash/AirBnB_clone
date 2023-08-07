@@ -5,12 +5,13 @@ contains the filestorage class
 import json
 from models.base_model import BaseModel
 
+all_classnames = {'BaseModel': BaseModel}
+
 
 class FileStorage:
-    """the calss for serialization and desrialization"""
+    """the class for serialization and desrialization"""
     __file_path = "file.json"
     __objects = {}
-    all_classnames = {'BaseModel': BaseModel}
 
     def all(self, cls=None):
         """returns the dictionary __objects"""
@@ -38,7 +39,9 @@ class FileStorage:
             for key, value in loadedfile.items():
                 theclass, obj_id = key.split('.')
                 classname =  self.all_classnames.get(theclass)
-                self.__objects[key] = theclass(**value)
+                if classname is not None:
+                    obj = classname(**value)
+                    self.__objects[key] = obj
         except:
             pass
 
