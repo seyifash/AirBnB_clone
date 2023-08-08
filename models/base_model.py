@@ -27,6 +27,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.utcnow()
             self.updated_at = datetime.utcnow()
+            models.storage.new(self)
 
     def __str__(self):
         """returns a string representation of the basemodel atributes"""
@@ -35,7 +36,6 @@ class BaseModel:
 
     def save(self):
         self.updated_at = datetime.utcnow()
-        models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
@@ -43,7 +43,7 @@ class BaseModel:
         my_dict = dict(self.__dict__)
         my_dict["__class__"] = self.__class__.__name__
         if "created_at" in my_dict:
-            my_dict["created_at"] = my_dict["created_at"].strftime(time)
+            my_dict["created_at"] = my_dict["created_at"].isoformat()
         if "updated_at" in my_dict:
-            my_dict["updated_at"] = my_dict["updated_at"].strftime(time)
+            my_dict["updated_at"] = my_dict["updated_at"].isoformat()
         return my_dict

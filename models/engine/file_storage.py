@@ -27,7 +27,7 @@ class FileStorage:
         from models.base_model import BaseModel
 
         classes = {
-            'BaseModel' : BaseModel
+            'BaseModel': BaseModel
         }
         return classes
 
