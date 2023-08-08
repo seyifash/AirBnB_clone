@@ -4,8 +4,14 @@ contains the filestorage class
 """
 import json
 from models.base_model import BaseModel
-
-all_classnames = {'BaseModel': BaseModel}
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
+allclassname = {'BaseModel': BaseModel, "User": User, "Amenity": Amenity,
+                "Place": Place, "Review": Review, "State": State, "City": City}
 
 
 class FileStorage:
@@ -39,7 +45,7 @@ class FileStorage:
                 for key in loadedfile:
                     if "__class__" in loadedfile[key]:
                         obj_name = loadedfile[key]["__class__"]
-                        classname = all_classnames.get(obj_name)
+                        classname = allclassname.get(obj_name)
                     self.__objects[key] = classname(**loadedfile[key])
         except Exception:
             pass
