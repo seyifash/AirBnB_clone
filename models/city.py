@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" holds class State"""
+"""contains the class city"""
 
 
 import models
@@ -12,5 +12,5 @@ class City(BaseModel):
     name = ""
 
     def __init__(self, *args, **kwargs):
-        """initializes the city"""
+        """initializes the city attributes"""
         super().__init__(*args, **kwargs)

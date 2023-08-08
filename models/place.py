@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" holds class State"""
+""" contains the class State"""
 
 
 import models
@@ -20,3 +20,8 @@ class Place(BaseModel):
     latitude = 0.0
     longitude = 0.0
     amenity_ids = []
+
+    def __init__(self, *args, **kwargs):
+        """initializes Place attributes"""
+        super().__init__(*args, **kwargs)
+

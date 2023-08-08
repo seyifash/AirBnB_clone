@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" holds class State"""
+"""contains the class review"""
 
 
 import models
@@ -13,5 +13,5 @@ class Review(BaseModel):
     text = ""
 
     def __init__(self, *args, **kwargs):
-        """initializes Review"""
+        """initializes Review attributes"""
         super().__init__(*args, **kwargs)

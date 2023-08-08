@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" holds class State"""
+"""contains class State"""
 
 
 import models
@@ -11,4 +11,5 @@ class State(BaseModel):
     name = ""
 
     def __init__(self, *args, **kwargs):
+        """initializes the state attributes"""
         super().__init__(*args, **kwargs)
