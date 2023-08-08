@@ -23,14 +23,6 @@ class FileStorage:
             my_key = obj.__class__.__name__ + "." + obj.id
             self.__objects[my_key] = obj
 
-    def all_classnames(self):
-        from models.base_model import BaseModel
-
-        classes = {
-            'BaseModel': BaseModel
-        }
-        return classes
-
     def save(self):
         """serializes __objects to the JSON file"""
         our_json = {}

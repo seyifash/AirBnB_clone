@@ -7,11 +7,7 @@ import models
 from datetime import datetime
 from models import storage
 from models.base_model import BaseModel
-
-classnames = {
-    'BaseModel': BaseModel
-}
-
+classnames = {"BaseModel": BaseModel}
 
 def parse_arg(arg):
     """parses and separates args"""
@@ -125,6 +121,7 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
         else:
             print("** class name missing ** ")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
