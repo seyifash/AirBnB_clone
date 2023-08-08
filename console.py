@@ -88,9 +88,9 @@ class HBNBCommand(cmd.Cmd):
             if arg_list[0] not in classnames:
                 print("** class doesn't exist **")
             else:
-                for key, value in all_objs:
+                for key, value in all_objs.items():
                     classname, id = key.split(".")
-                    if arg[0] == classname:
+                    if arg_list[0] == classname:
                         result.append(all_objs[key].__str__())
                 print(result)
         else:
