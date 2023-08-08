@@ -23,7 +23,7 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """an emptyline + Enter doesnt execute anything"""
         return False
-
+ 
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
