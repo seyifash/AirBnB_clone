@@ -119,10 +119,13 @@ class HBNBCommand(cmd.Cmd):
                 print("** value missing **")
             else:
                 obj = all_objs[f"{arg_list[0]}.{arg_list[1]}"]
-                val_type = type(getattr(obj, arg_list[2]))
                 if arg_list[3][0] == '"' and arg_list[3][-1] == '"':
                     arg_list[3] = arg_list[3][1:-1]
-                setattr(obj, arg_list[2], val_type(arg_list[3]))
+                if arg_list[2] in obj.to_dict():
+                    val_type = type(getattr(obj, arg_list[2]))
+                    setattr(obj, arg_list[2], val_type(arg_list[3]))
+                else:
+                    setattr(obj, arg_list[2], arg_list[3])
                 storage.save()
         else:
             print("** class name missing ** ")
