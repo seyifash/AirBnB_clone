@@ -4,6 +4,7 @@ contains the console
 """
 import cmd
 import models
+import re
 from datetime import datetime
 from models import storage
 from models.base_model import BaseModel
@@ -13,8 +14,15 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
-classnames = {"BaseModel": BaseModel, "Amenity": Amenity, "City": City,
-              "Place": Place, "User": User, "Review": Review, "State": State}
+classnames = {
+    "BaseModel": BaseModel,
+    "Amenity": Amenity,
+    "City": City,
+    "Place": Place,
+    "User": User,
+    "Review": Review,
+    "State": State
+    }
 
 
 def parse_arg(arg):
@@ -22,9 +30,68 @@ def parse_arg(arg):
     return arg.split(" ")
 
 
+def rem_chars(my_list):
+    """removes the \" or \' character"""
+    for i in range(len(my_list)):
+        if my_list[i][0] == '"' or my_list[i][0] == "'":
+            my_list[i] = my_list[i][1:-1]
+    return my_list
+
+
 class HBNBCommand(cmd.Cmd):
     """A class that contains the entry point of the command interpreter"""
     prompt = '(hbnb) '
+
+    def default(self, string):
+        """
+        If your class does not include a specific command
+        processor for a command, the method default()
+        is called with the entire input line as an argument.
+        """
+        commands = {
+            'all': self.do_all,
+            'show': self.do_show,
+            'destroy': self.do_destroy,
+            'update': self.do_update,
+            'count': self.do_count
+        }
+
+        # pattern = r'(\w+)\.(\w+)\(("?[\w-]*"?\)?,? ?)+({.*})?'
+        if re.search(r'\.', string) is None:
+            print("*** Unknown syntax: {}".format(string))
+            return
+
+        pattern = r'\w+(?=\.)'
+        model = re.findall(pattern, string)
+        pattern2 = r'(?<=\.)\w+'
+        cmd = re.findall(pattern2, string)
+        if model[0] not in classnames or cmd[0] not in commands:
+            return
+
+        dict_values = re.findall('{.*}', string)
+        if dict_values:
+            again = re.sub(dict_values[0], "", string)
+            search = re.findall('[^()]+', again)
+            search = re.findall('[^, ]+', search[1])
+            new = re.split(': |, ', dict_values[0][1:-1])
+
+            new = rem_chars(new)
+            search = rem_chars(search)
+
+            co_join = model + search
+            co_join = co_join + new
+            arg = " ".join(co_join)
+            commands[cmd[0]](arg)
+        else:
+            search = re.findall('[^()]+', string)
+            if len(search) > 1:
+                search = search[1].split(', ')
+                search = rem_chars(search)
+                co_join = model + search
+                arg = " ".join(co_join)
+                commands[cmd[0]](arg)
+            else:
+                commands[cmd[0]](" ".join(model))
 
     def do_EOF(self, arg):
         """ctrl+D to exit the program"""
@@ -67,7 +134,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing ** ")
 
     def do_destroy(self, arg):
-        """destroys an onject from the json database"""
+        """destroys an object from the json database"""
         arg_list = parse_arg(arg)
         all_objs = storage.all()
         if arg_list[0]:
@@ -82,6 +149,18 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
         else:
             print("** class name missing ** ")
+
+    def do_count(self, arg):
+        """counts the number of intsnaces of
+        an object"""
+        arg_list = parse_arg(arg)
+        all_objs = storage.all()
+        result = []
+        for key, value in all_objs.items():
+            classname, id = key.split(".")
+            if arg_list[0] == classname:
+                result.append(all_objs[key].__str__())
+        print(len(result))
 
     def do_all(self, arg):
         """prints all the objs based on or not on a class"""
@@ -104,28 +183,29 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, arg):
         """updates an attribute in an object"""
-        arg_list = parse_arg(arg)
+        argl = parse_arg(arg)
         all_objs = storage.all()
-        if arg_list[0]:
-            if arg_list[0] not in classnames:
+        if argl[0]:
+            if argl[0] not in classnames:
                 print("** class doesn't exist **")
-            elif len(arg_list) == 1:
+            elif len(argl) == 1:
                 print("** instance id missing **")
-            elif f"{arg_list[0]}.{arg_list[1]}" not in all_objs:
+            elif f"{argl[0]}.{argl[1]}" not in all_objs:
                 print("** no instance found **")
-            elif len(arg_list) == 2:
+            elif len(argl) == 2:
                 print("** attribute name missing **")
-            elif len(arg_list) == 3:
+            elif len(argl) == 3:
                 print("** value missing **")
             else:
-                obj = all_objs[f"{arg_list[0]}.{arg_list[1]}"]
-                if arg_list[3][0] == '"' and arg_list[3][-1] == '"':
-                    arg_list[3] = arg_list[3][1:-1]
-                if arg_list[2] in obj.to_dict():
-                    val_type = type(getattr(obj, arg_list[2]))
-                    setattr(obj, arg_list[2], val_type(arg_list[3]))
-                else:
-                    setattr(obj, arg_list[2], arg_list[3])
+                obj = all_objs[f"{argl[0]}.{argl[1]}"]
+                for i in range(2, len(argl), 2):
+                    if argl[i + 1][0] == '"' and argl[i + 1][-1] == '"':
+                        argl[i + 1] = argl[i + 1][1:-1]
+                    if argl[i] in obj.to_dict():
+                        val_type = type(getattr(obj, argl[i]))
+                        setattr(obj, argl[i], val_type(argl[i + 1]))
+                    else:
+                        setattr(obj, argl[i], argl[i + 1])
                 storage.save()
         else:
             print("** class name missing ** ")
