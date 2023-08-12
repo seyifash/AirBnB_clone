@@ -2,8 +2,6 @@
 """
 contains the class review
 """
-
-
 import models
 from models.base_model import BaseModel
 
