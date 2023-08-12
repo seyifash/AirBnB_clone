@@ -12,7 +12,7 @@ from models.engine.file_storage import FileStorage
 
 
 class TestBaseModel(unittest.TestCase):
-    """represents the test cases for BseModel class."""
+    """represents the test cases for BaseModel class."""
 
     def setUp(self):
         """This is run before test cases"""
@@ -27,6 +27,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(type(self.base1.updated_at), datetime)
         base2 = BaseModel()
         self.assertEqual(len(self.storage_cpy.all()), obj_len + 1)
+        self.assertNotEqual(self.base1.id, base2.id)
 
     def test_save(self):
         """test cases for save method of BestModels"""
@@ -59,7 +60,14 @@ class TestBaseModel(unittest.TestCase):
 
     def test_to_dict(self):
         """testcases for to_dict method"""
-        self.assertEqual(type(self.base1.to_dict()), dict)
+        test_dict = self.base1.to_dict()
+        self.assertEqual(type(test_dict), dict)
+        self.assertNotEqual(test_dict, self.base1.__dict__)
+        self.assertEqual(str, type(test_dict['created_at']))
+        self.assertEqual(str, type(test_dict['updated_at']))
+        self.assertIn("__class__", test_dict.keys())
+        new_base = BaseModel(**test_dict)
+        self.assertFalse(self.base1 is new_base)
 
 
 if __name__ == "__main__":
