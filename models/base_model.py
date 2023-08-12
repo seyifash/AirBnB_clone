@@ -35,6 +35,8 @@ class BaseModel:
                                          self.__dict__)
 
     def save(self):
+        """saves and updates the updated_at attribute
+        and also saves the storage"""
         self.updated_at = datetime.utcnow()
         models.storage.save()
 
