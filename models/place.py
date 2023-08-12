@@ -24,4 +24,3 @@ class Place(BaseModel):
     def __init__(self, *args, **kwargs):
         """initializes Place attributes"""
         super().__init__(*args, **kwargs)
-
