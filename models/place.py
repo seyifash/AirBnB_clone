@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" contains the class State"""
+"""
+contains the class State
+"""
 
 
 import models
@@ -7,7 +9,7 @@ from models.base_model import BaseModel
 
 
 class Place(BaseModel):
-    """Representation of Place """
+    """Representation of Place"""
 
     city_id = ""
     user_id = ""

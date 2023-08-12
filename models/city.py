@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""contains the class city"""
+"""
+contains the class city
+"""
 
 
 import models

@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""contains the class review"""
+"""
+contains the class review
+"""
 
 
 import models

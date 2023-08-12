@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""contains class State"""
+"""
+contains class State
+"""
 
 
 import models
@@ -11,5 +13,10 @@ class State(BaseModel):
     name = ""
 
     def __init__(self, *args, **kwargs):
-        """initializes the state attributes"""
+        """initializes the state attributes
+
+        Args:
+        *args: Variable-length list of positional arguments.
+        **kwargs: Arbitrary keyword arguments.
+        """
         super().__init__(*args, **kwargs)

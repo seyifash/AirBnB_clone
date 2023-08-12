@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Contains the class Amenity"""
+"""
+Contains the class Amenity
+"""
 
 
 import models
