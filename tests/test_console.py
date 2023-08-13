@@ -9,7 +9,7 @@ from console import HBNBCommand
 from models.engine.file_storage import FileStorage
 
 
-class Test_HBNBCommandConsole(unittest.TestCase):
+class TestHBNBCommand(unittest.TestCase):
 
     def setUp(self):
         self.console = HBNBCommand()
