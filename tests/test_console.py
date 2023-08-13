@@ -9,9 +9,10 @@ from console import HBNBCommand
 from models.engine.file_storage import FileStorage
 
 
-class TestHBNBCommand(unittest.TestCase):
+class TestHBNBCommandConsole(unittest.TestCase):
 
     def setUp(self):
+        """runs this before the test methods"""
         self.console = HBNBCommand()
         self.storage_cpy = FileStorage()
 
@@ -27,29 +28,31 @@ class TestHBNBCommand(unittest.TestCase):
     #         self.assertEqual(f.getvalue().strip(), quit_help)
 
     def test_create(self):
+        """test cases for create command"""
         with patch('sys.stdout', new=StringIO()) as f:
-            # Test case where class name is missing
+            """# Test case where class name is missing"""
             self.console.onecmd("create")
             error_output = f.getvalue().strip()
             self.assertEqual(error_output, "** class name missing **")
 
-            # Test case where class name doesn't exist
+            """# Test case where class name doesn't exist"""
         with patch('sys.stdout', new=StringIO()) as f:
             self.console.onecmd("create MyModel")
             error_output = f.getvalue().strip()
             self.assertEqual(error_output, "** class doesn't exist **")
 
-            # Test case where class name exists (BaseModel)
+            """# Test case where class name exists (BaseModel)"""
         with patch('sys.stdout', new=StringIO()) as f:
             self.console.onecmd("create BaseModel")
             cmd_output = f.getvalue().strip()
             self.assertEqual(str, type(cmd_output))
 
-            # Check if ID is printed
+            """# Check if ID is printed"""
             instance_id = cmd_output.split()[-1]
             self.assertIn(instance_id, cmd_output)
 
     def test_show(self):
+        """test cases for show command"""
         with patch('sys.stdout', new=StringIO()) as f:
             # Test case where class name is missing
             self.console.onecmd("show")
@@ -88,7 +91,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertIn(instance_id, show_output)
 
     def test_destroy(self):
-        # Test destroy with valid instance
+        """# Test destroy with valid instance"""
         with patch('sys.stdout', new=StringIO()) as f:
             self.console.onecmd("create BaseModel")
             cmd_output = f.getvalue().strip()
@@ -125,7 +128,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertEqual(error_output, "** no instance found **")
 
     def test_all(self):
-        # Create instances
+        """test cases for all commmand"""
 
         self.console.onecmd("create User")
         self.console.onecmd("create BaseModel")
@@ -148,21 +151,25 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertEqual(error_output, "** class doesn't exist **")
 
     def test_quit(self):
+        """test cases for quit command"""
         with patch('sys.stdout', new=StringIO()) as f:
             self.assertTrue(self.console.onecmd("quit"))
             self.assertEqual(f.getvalue().strip(), "")
 
     def test_EOF(self):
+        """test cases for   EOF command"""
         with patch('sys.stdout', new=StringIO()) as f:
             self.assertTrue(self.console.onecmd("EOF"))
             self.assertEqual(f.getvalue().strip(), "")
 
     def test_emptyline(self):
+        """test cases for emptyline command"""
         with patch('sys.stdout', new=StringIO()) as f:
             self.console.onecmd("")
             self.assertEqual(f.getvalue().strip(), "")
 
     def test_default(self):
+        """test cases for default method"""
         with patch('sys.stdout', new=StringIO()) as f:
             uk = "jkj"
             self.console.onecmd(uk)
