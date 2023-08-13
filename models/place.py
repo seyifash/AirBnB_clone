@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-contains the class State
+contains the class place
 """
 import models
 from models.base_model import BaseModel
