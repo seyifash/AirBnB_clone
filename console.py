@@ -208,7 +208,7 @@ class HBNBCommand(cmd.Cmd):
                         setattr(obj, argl[i], argl[i + 1])
                 storage.save()
         else:
-            print("** class name missing ** ")
+            print("** class name missing **")
 
 
 if __name__ == "__main__":
