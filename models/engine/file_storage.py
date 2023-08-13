@@ -15,7 +15,12 @@ allclassname = {'BaseModel': BaseModel, "User": User, "Amenity": Amenity,
 
 
 class FileStorage:
-    """the class for serialization and desrialization"""
+    """the class for serialization and desrialization
+
+    Attributes:
+        __file_path (str): The name of the file to subjects to
+         __objects (dict): A dictionary of the instances for each objects
+    """
     __file_path = "file.json"
     __objects = {}
 

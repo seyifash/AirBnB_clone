@@ -12,7 +12,12 @@ class BaseModel:
     """The basemodel class which serve as the base for all other class"""
 
     def __init__(self, *args, **kwargs):
-        """initialization of the basemodel attributes"""
+        """initialization of the basemodel attributes
+
+        Args:
+            *args (any): unused
+            *kwargs (dict): key value pair of attributes
+        """
         if kwargs:
             kwargs.pop("__class__", None)
             for key, value in kwargs.items():
