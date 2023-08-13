@@ -9,10 +9,9 @@ from console import HBNBCommand
 
 
 class Test_HBNBCommandConsole(unittest.TestCase):
-    
+
     def setUp(self):
         self.console = HBNBCommand()
-
 
     def test_create(self):
         with patch('sys.stdout', new=StringIO()) as f:
@@ -104,8 +103,6 @@ class Test_HBNBCommandConsole(unittest.TestCase):
             error_output = f.getvalue().strip()
             self.assertEqual(error_output, "** no instance found **")
 
-
-
     def test_all(self):
         # Create instances
         self.console.onecmd("create BaseModel")
@@ -142,6 +139,7 @@ class Test_HBNBCommandConsole(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             self.console.onecmd("")
             self.assertEqual(f.getvalue().strip(), "")
+
 
 if __name__ == "__main__":
     unittest.main()
