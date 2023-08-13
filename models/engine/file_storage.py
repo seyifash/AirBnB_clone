@@ -51,6 +51,6 @@ class FileStorage:
                     if "__class__" in loadedfile[key]:
                         obj_name = loadedfile[key]["__class__"]
                         classname = allclassname.get(obj_name)
-                    self.__objects[key] = classname(**loadedfile[key])
+                        self.__objects[key] = classname(**loadedfile[key])
         except Exception:
             pass

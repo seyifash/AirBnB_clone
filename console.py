@@ -131,7 +131,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print(all_objs[f"{arg_list[0]}.{arg_list[1]}"])
         else:
-            print("** class name missing ** ")
+            print("** class name missing **")
 
     def do_destroy(self, arg):
         """destroys an object from the json database"""
@@ -148,7 +148,7 @@ class HBNBCommand(cmd.Cmd):
                 del all_objs[f"{arg_list[0]}.{arg_list[1]}"]
                 storage.save()
         else:
-            print("** class name missing ** ")
+            print("** class name missing **")
 
     def do_count(self, arg):
         """counts the number of intsnaces of
@@ -208,7 +208,7 @@ class HBNBCommand(cmd.Cmd):
                         setattr(obj, argl[i], argl[i + 1])
                 storage.save()
         else:
-            print("** class name missing ** ")
+            print("** class name missing **")
 
 
 if __name__ == "__main__":
