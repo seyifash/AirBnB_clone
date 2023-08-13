@@ -13,12 +13,3 @@ class State(BaseModel):
         name (str): the name of the state
     """
     name = ""
-
-    def __init__(self, *args, **kwargs):
-        """initializes the state attributes
-
-        Args:
-        *args: Variable-length list of positional arguments.
-        **kwargs: Arbitrary keyword arguments.
-        """
-        super().__init__(*args, **kwargs)
