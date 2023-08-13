@@ -10,6 +10,7 @@ from models.engine.file_storage import FileStorage
 
 
 class TestHBNBCommandConsole(unittest.TestCase):
+    """represents test case for HBNBCommand"""
 
     def setUp(self):
         """runs this before the test methods"""
