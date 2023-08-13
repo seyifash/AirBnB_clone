@@ -260,7 +260,7 @@ class TestHBNBCommand_help(unittest.TestCase):
              "EOF  all  count  create  destroy  help  quit  show  update")
         with patch('sys.stdout', new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("help"))
-            self.assertEqual(command_help, f.getvalue().strip())
+            self.assertEqual(c, f.getvalue().strip())
 
 
 if __name__ == "__main__":
