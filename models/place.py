@@ -8,15 +8,15 @@ from models.base_model import BaseModel
 
 class Place(BaseModel):
     """Representation of Place
-    
+
     Attributes:
-        city_id  (str): the city's id
+        city_id (str): the city's id
         user_id (str): the user's id
         name (str): the name of the place
-        description (str): the descripition of the place
+        description (str): the description of the place
         number_rooms (int): the number of room
         number_bathrooms (int): the number of bathrooms
-        max_guest (int): the maximum number of guest 
+        max_guest (int): the maximum number of guest
         price_by_night (int): the price by night for the place
         latitude (float): the latitude of the place
         longitude (float): The longitude of the place
