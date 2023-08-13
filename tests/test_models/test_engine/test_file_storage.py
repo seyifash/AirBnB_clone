@@ -19,6 +19,13 @@ class TestFileStorage(unittest.TestCase):
         """test case(s) for the all method in
         the FileStorage class"""
         self.assertEqual(type(self.storage_cpy.all()), dict)
+        len0 = len(self.storage_cpy.all())
+        cs0 = BaseModel()
+        self.assertEqual(len(self.storage_cpy.all()), len0 + 1)
+        cs1 = BaseModel()
+        self.assertEqual(len(self.storage_cpy.all()), len0 + 2)
+        cs2 = BaseModel()
+        self.assertEqual(len(self.storage_cpy.all()), len0 + 3)
 
     def test_new(self):
         """test cases for the new method"""
