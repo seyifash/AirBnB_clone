@@ -252,6 +252,15 @@ class TestHBNBCommand_help(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("help show"))
             self.assertEqual(show_help, f.getvalue().strip())
 
+    def test_help(self):
+        """Test case for the help command itself"""
+        command_help = ("Documented commands (type help <topic>):\n"
+                        "========================================\n"
+                        "EOF  all  count  create  destroy  help  quit  show  update")
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd("help"))
+            self.assertEqual(command_help, f.getvalue().strip())
 
+        
 if __name__ == "__main__":
     unittest.main()

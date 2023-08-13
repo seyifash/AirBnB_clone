@@ -151,8 +151,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
     def do_count(self, arg):
-        """counts the number of intsnaces of
-        an object"""
+        """counts the number of intsnaces of an object"""
         arg_list = parse_arg(arg)
         all_objs = storage.all()
         result = []
