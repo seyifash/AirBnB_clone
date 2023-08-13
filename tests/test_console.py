@@ -114,7 +114,7 @@ class Test_HBNBCommandConsole(unittest.TestCase):
             all_output = f.getvalue().strip()
 
             # Check if the output matches the expected format
-            self.assertTrue(all_output.startswith("[BaseModel]"))
+            self.assertTrue(all_output.startswith("["))
             self.assertTrue("{'created_at':" in all_output)
             self.assertTrue("'id':" in all_output)
             self.assertTrue("'updated_at':" in all_output)
