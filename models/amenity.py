@@ -7,9 +7,10 @@ from models.base_model import BaseModel
 
 
 class Amenity(BaseModel):
-    """Representation of Amenity """
-    name = ""
+    """Representation of Amenity
 
-    def __init__(self, *args, **kwargs):
-        """initializes Amenity attributes"""
-        super().__init__(*args, **kwargs)
+    Attributes:
+        name (str): The name of the amenity
+    """
+
+    name = ""

@@ -7,14 +7,10 @@ from models.base_model import BaseModel
 
 
 class State(BaseModel):
-    """class state that inherits from basemodel"""
+    """class state that inherits from basemodel
+
+    Atrributes:
+        name (str): the name of the state
+    """
+
     name = ""
-
-    def __init__(self, *args, **kwargs):
-        """initializes the state attributes
-
-        Args:
-        *args: Variable-length list of positional arguments.
-        **kwargs: Arbitrary keyword arguments.
-        """
-        super().__init__(*args, **kwargs)
