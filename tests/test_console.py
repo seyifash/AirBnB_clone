@@ -216,7 +216,7 @@ class TestHBNBCommand_update(unittest.TestCase):
             self.assertEqual(error_output, "** value missing **")
 
 
-class TestHBNBCommand_update(unittest.TestCase):
+class TestHBNBCommand_quit(unittest.TestCase):
     """Test case for quit command"""
 
     def test_quit(self):
