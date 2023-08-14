@@ -132,6 +132,56 @@ class TestHBNBCommand(unittest.TestCase):
             error_output = f.getvalue().strip()
             self.assertEqual(error_output, "** class doesn't exist **")
 
+    def test_update_missing_class(self):
+        """Test case for the update command without the class name"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("update")
+            error_output = f.getvalue().strip()
+            self.assertEqual(error_output, "** class name missing **")
+
+    def test_update_wrong_class_name(self):
+        """Test case for a non existing class name"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("update SomeModel")
+            error_output = f.getvalue().strip()
+            self.assertEqual(error_output, "** class doesn't exist **")
+
+    def test_update_missing_id(self):
+        """Test case for hen no id is given"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("update BaseModel")
+            error_output = f.getvalue().strip()
+            self.assertEqual(error_output, "** instance id missing **")
+
+    def test_update_invalid_id(self):
+        """Test case for the wrong id"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("update BaseModel 12345")
+            error_output = f.getvalue().strip()
+            self.assertEqual(error_output, "** no instance found **")
+
+    def test_update_missing_attribute_name(self):
+        """Test case for missing attribute name"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create BaseModel")
+            cmd_output = f.getvalue().strip()
+            instance_id = cmd_output.split()[-1]
+
+            self.console.onecmd('update BaseModel {}'.format(instance_id))
+            error_output = f.getvalue().strip().split('\n')[-1]
+            self.assertEqual(error_output, "** attribute name missing **")
+
+    def test_update_missing_attr_value(self):
+        """Test case for when attribute value is not given"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create BaseModel")
+            cmd_output = f.getvalue().strip()
+            inst_id = cmd_output.split()[-1]
+
+            self.console.onecmd('update BaseModel {} attr_nm'.format(inst_id))
+            error_output = f.getvalue().strip().split('\n')[-1]
+            self.assertEqual(error_output, "** value missing **")
+
     def test_quit(self):
         """test cases for quit command"""
         with patch('sys.stdout', new=StringIO()) as f:
@@ -259,7 +309,7 @@ class TestHBNBCommand_help(unittest.TestCase):
              "EOF  all  count  create  destroy  help  quit  show  update")
         with patch('sys.stdout', new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("help"))
-            self.assertEqual(command_help, f.getvalue().strip())
+            self.assertEqual(c, f.getvalue().strip())
 
 
 if __name__ == "__main__":
