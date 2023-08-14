@@ -18,7 +18,7 @@ class TestHBNBCommand_prompt(unittest.TestCase):
         self.assertEqual('(hbnb) ', HBNBCommand().prompt)
 
 
-class HBNBCommand_create(unittest.TestCase):
+class TestHBNBCommand_create(unittest.TestCase):
     """test cases for create command"""
 
     def test_missing_classes(self):
@@ -47,7 +47,7 @@ class HBNBCommand_create(unittest.TestCase):
             self.assertIn(instance_id, cmd_output)
 
 
-class HBNBCommand_show(unittest.TestCase):
+class TestHBNBCommand_show(unittest.TestCase):
     """test cases for show command"""
 
     def test_class_missing(self):
@@ -93,7 +93,7 @@ class HBNBCommand_show(unittest.TestCase):
             self.assertIn(instance_id, show_output)
 
 
-class HBNBCommand_destroy(unittest.TestCase):
+class TestHBNBCommand_destroy(unittest.TestCase):
     """test cases for destroy command"""
 
     def test_destroy_validinstance(self):
@@ -137,7 +137,7 @@ class HBNBCommand_destroy(unittest.TestCase):
             self.assertEqual(error_output, "** no instance found **")
 
 
-class HBNBCommand_all(unittest.TestCase):
+class TestHBNBCommand_all(unittest.TestCase):
     """test cases for all commmand"""
 
     def test_class_typed(self):
@@ -162,8 +162,58 @@ class HBNBCommand_all(unittest.TestCase):
             self.assertEqual(error_output, "** class doesn't exist **")
 
 
-class HBNBCommand_quit(unittest.TestCase):
+class TestHBNBCommand_quit(unittest.TestCase):
     """test cases for quit command"""
+
+    def test_update_missing_class(self):
+        """Test case for the update command without the class name"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("update")
+            error_output = f.getvalue().strip()
+            self.assertEqual(error_output, "** class name missing **")
+
+    def test_update_wrong_class_name(self):
+        """Test case for a non existing class name"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("update SomeModel")
+            error_output = f.getvalue().strip()
+            self.assertEqual(error_output, "** class doesn't exist **")
+
+    def test_update_missing_id(self):
+        """Test case for hen no id is given"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("update BaseModel")
+            error_output = f.getvalue().strip()
+            self.assertEqual(error_output, "** instance id missing **")
+
+    def test_update_invalid_id(self):
+        """Test case for the wrong id"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("update BaseModel 12345")
+            error_output = f.getvalue().strip()
+            self.assertEqual(error_output, "** no instance found **")
+
+    def test_update_missing_attribute_name(self):
+        """Test case for missing attribute name"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create BaseModel")
+            cmd_output = f.getvalue().strip()
+            instance_id = cmd_output.split()[-1]
+
+            self.console.onecmd('update BaseModel {}'.format(instance_id))
+            error_output = f.getvalue().strip().split('\n')[-1]
+            self.assertEqual(error_output, "** attribute name missing **")
+
+    def test_update_missing_attr_value(self):
+        """Test case for when attribute value is not given"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("create BaseModel")
+            cmd_output = f.getvalue().strip()
+            inst_id = cmd_output.split()[-1]
+
+            self.console.onecmd('update BaseModel {} attr_nm'.format(inst_id))
+            error_output = f.getvalue().strip().split('\n')[-1]
+            self.assertEqual(error_output, "** value missing **")
 
     def test_quit(self):
         """tests for quit"""
@@ -172,7 +222,7 @@ class HBNBCommand_quit(unittest.TestCase):
             self.assertEqual(f.getvalue().strip(), "")
 
 
-class HBNBCommand_EOF(unittest.TestCase):
+class TestHBNBCommand_EOF(unittest.TestCase):
     """represents test cases for EOF command"""
 
     def test_EOF(self):
@@ -182,7 +232,7 @@ class HBNBCommand_EOF(unittest.TestCase):
             self.assertEqual(f.getvalue().strip(), "")
 
 
-class HBNBCommand_emptyline(unittest.TestCase):
+class TestHBNBCommand_emptyline(unittest.TestCase):
     """represents test cases for emptyline"""
 
     def test_emptyline(self):
@@ -192,7 +242,7 @@ class HBNBCommand_emptyline(unittest.TestCase):
             self.assertEqual(f.getvalue().strip(), "")
 
 
-class HBNBCommand_default(unittest.TestCase):
+class TestHBNBCommand_default(unittest.TestCase):
     """test cases for default command"""
 
     def test_invalid_cmd(self):
