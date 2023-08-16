@@ -161,6 +161,99 @@ class TestHBNBCommand_all(unittest.TestCase):
             error_output = f.getvalue().strip()
             self.assertEqual(error_output, "** class doesn't exist **")
 
+    def test_class_typed_default(self):
+        """tests if a class is typed"""
+        HBNBCommand().onecmd("create User")
+        HBNBCommand().onecmd("create BaseModel")
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("BaseModel.all()")
+            all_output = f.getvalue().strip()
+
+            self.assertTrue("[BaseModel]" in all_output)
+            self.assertTrue("'created_at':" in all_output)
+            self.assertTrue("'id':" in all_output)
+            self.assertTrue("'updated_at':" in all_output)
+
+    def test_class_typed_user(self):
+        """tests if a class is typed"""
+        HBNBCommand().onecmd("create User")
+        HBNBCommand().onecmd("create BaseModel")
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("User.all()")
+            all_output = f.getvalue().strip()
+
+            self.assertTrue("[User]" in all_output)
+            self.assertTrue("'created_at':" in all_output)
+            self.assertTrue("'id':" in all_output)
+            self.assertTrue("'updated_at':" in all_output)
+
+    def test_class_typed_amenity(self):
+        """tests if a class is typed"""
+        HBNBCommand().onecmd("create Amenity")
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("Amenity.all()")
+            all_output = f.getvalue().strip()
+
+            self.assertTrue("[Amenity]" in all_output)
+            self.assertTrue("'created_at':" in all_output)
+            self.assertTrue("'id':" in all_output)
+            self.assertTrue("'updated_at':" in all_output)
+
+    def test_class_typed_city(self):
+        """tests if a class is typed"""
+        HBNBCommand().onecmd("create City")
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("City.all()")
+            all_output = f.getvalue().strip()
+
+            self.assertTrue("[City]" in all_output)
+            self.assertTrue("'created_at':" in all_output)
+            self.assertTrue("'id':" in all_output)
+            self.assertTrue("'updated_at':" in all_output)
+
+    def test_class_typed_place(self):
+        """tests if a class is typed"""
+        HBNBCommand().onecmd("create Place")
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("Place.all()")
+            all_output = f.getvalue().strip()
+
+            self.assertTrue("[Place]" in all_output)
+            self.assertTrue("'created_at':" in all_output)
+            self.assertTrue("'id':" in all_output)
+            self.assertTrue("'updated_at':" in all_output)
+
+    def test_class_typed_review(self):
+        """tests if a class is typed"""
+        HBNBCommand().onecmd("create Review")
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("Review.all()")
+            all_output = f.getvalue().strip()
+
+            self.assertTrue("[Review]" in all_output)
+            self.assertTrue("'created_at':" in all_output)
+            self.assertTrue("'id':" in all_output)
+            self.assertTrue("'updated_at':" in all_output)
+
+    def test_class_typed_state(self):
+        """tests if a class is typed"""
+        HBNBCommand().onecmd("create State")
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("State.all()")
+            all_output = f.getvalue().strip()
+
+            self.assertTrue("[State]" in all_output)
+            self.assertTrue("'created_at':" in all_output)
+            self.assertTrue("'id':" in all_output)
+            self.assertTrue("'updated_at':" in all_output)
+
 
 class TestHBNBCommand_update(unittest.TestCase):
     """test cases for update command"""
