@@ -211,6 +211,41 @@ class TestHBNBCommand_update(unittest.TestCase):
             self.assertEqual(error_output, "** value missing **")
 
 
+class TestHBNBCommand_count(unittest.TestCase):
+    """ Test cases for count command"""
+
+    def invalid_model(self):
+        """tests for inputs that are not defined
+        as classes"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('count sgdgd')
+            self.assertEqual(f.getvalue().strip(), 0)
+
+    def no_model(self):
+        """tests for inputs that do not have models
+        inputted"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('count')
+            self.assertEqual(f.getvalue().strip(), 0)
+
+    def valid_model(self):
+        """tests for inputs that are defined
+        as classes"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            storage_cpy = FileStorage()
+            all_objs = storage_cpy.all()
+            mod_objs = [item for item in all_objs if 'BaseModel' in item]
+            HBNBCommand().onecmd('count BaseModel')
+            self.assertEqual(f.getvalue().strip(), len(mod_objs))
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            storage_cpy = FileStorage()
+            all_objs = storage_cpy.all()
+            mod_objs = [item for item in all_objs if 'BaseModel' in item]
+            HBNBCommand().onecmd('BaseModel.count()')
+            self.assertEqual(f.getvalue().strip(), len(mod_objs))
+
+
 class TestHBNBCommand_quit(unittest.TestCase):
     """Test case for quit command"""
 
@@ -299,11 +334,11 @@ class TestHBNBCommand_default(unittest.TestCase):
             self.assertEqual(f.getvalue().strip(), "** instance id missing **")
 
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd('BaseModel.destroy("135)')
+            HBNBCommand().onecmd('BaseModel.destroy("135")')
             self.assertEqual(f.getvalue().strip(), "** no instance found **")
 
         with patch('sys.stdout', new=StringIO()) as f:
-            self.console.onecmd('BaseModel.update(122-33')
+            HBNBCommand().onecmd('BaseModel.update("122-33")')
             error_output = f.getvalue().strip()
             self.assertEqual(error_output, "** no instance found **")
 
