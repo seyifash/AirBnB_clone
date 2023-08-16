@@ -51,6 +51,20 @@ class TestFileStorage(unittest.TestCase):
         f2.close()
         os.remove('file.json')
 
+    def test_save_with_model(self):
+        """testcases for the save method in FilesStorage"""
+        new = BaseModel()
+        new.save()
+        f = open('file.json')
+        self.assertGreater(len(f.readlines()), 0)
+        new2 = BaseModel()
+        new.save()
+        f2 = open('file.json')
+        self.assertGreater(len(f2.readlines()[0]), len(f.readlines()[0]))
+        f.close()
+        f2.close()
+        os.remove('file.json')
+
     def test_reload(self):
         """testcases for reload method"""
         os.remove('file.json')
